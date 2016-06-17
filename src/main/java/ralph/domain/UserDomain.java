@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 /**
@@ -34,6 +35,13 @@ public class UserDomain {
 
     public User findByUsername(String username) {
         return entityManager.find(User.class, username);
+    }
+
+    public boolean authenticate(String username, String password) {
+        Query query = entityManager.createQuery("from User u where u.username = :username and u.password = :password");
+        query.setParameter("username", username);
+        query.setParameter("password", password);
+        return !query.getResultList().isEmpty();
     }
 
     public User replace(User user) {
