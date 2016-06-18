@@ -1,6 +1,7 @@
 package ralph.domain;
 
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -44,7 +45,13 @@ public class PersonDomain {
         return !query.getResultList().isEmpty();
     }
 
+    @Transactional
     public Person replace(Person person) {
         return entityManager.merge(person);
+    }
+
+    public List<Person> all() {
+        Query query = entityManager.createQuery("from Person p");
+        return query.getResultList();
     }
 }

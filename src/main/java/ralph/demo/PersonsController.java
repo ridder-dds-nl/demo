@@ -1,9 +1,11 @@
 package ralph.demo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ralph.domain.Person;
+import ralph.domain.PersonDomain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,16 +17,16 @@ import java.util.List;
 @Controller
 public class PersonsController {
 
+    @Autowired
+    PersonDomain personDomain;
+
     @RequestMapping(path = "/persons")
     String index(ModelMap modelMap) {
-        List<Person> personList = new ArrayList<>();
-        personList.addAll(Arrays.asList(new Person("amanda", "please"), new Person("ralph", "secret")));
-        modelMap.put("personList", personList);
-        modelMap.put("welcome", "Welcome");
+//        List<Person> personList = new ArrayList<>();
+//        personList.addAll(Arrays.asList(new Person("amanda", "please"), new Person("ralph", "secret")));
+//        modelMap.put("personList", personList);
+//        modelMap.put("welcome", "Welcome");
+        modelMap.put("personList", personDomain.all());
         return "index";
-    }
-
-    public void getPersons() {
-
     }
 }
