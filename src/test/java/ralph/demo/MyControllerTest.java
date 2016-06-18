@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import ralph.domain.UserDomain;
+import ralph.domain.PersonDomain;
 
 import static org.junit.Assert.assertEquals;
 
@@ -15,12 +15,12 @@ import static org.junit.Assert.assertEquals;
 public class MyControllerTest {
 
     @Mock
-    private UserDomain userDomain;
+    private PersonDomain personDomain;
 
     @Test
     public void test() {
         MyController controller = new MyController();
-        controller.setUserDomain(userDomain);
+        controller.setPersonDomain(personDomain);
         assertEquals(MyController.HELLO, controller.sayHello());
     }
 }

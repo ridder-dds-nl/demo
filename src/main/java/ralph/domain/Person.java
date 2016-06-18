@@ -10,7 +10,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "user_t")
-public class User {
+public class Person {
 
     @Id
     @Column(name = "username")
@@ -19,7 +19,7 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    public User() {
+    public Person() {
         //for jps
     }
 
@@ -29,7 +29,7 @@ public class User {
      * @param username
      * @param password
      */
-    public User(String username, String password) {
+    public Person(String username, String password) {
         this.username = username;
         this.password = password;
     }
@@ -44,7 +44,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Person{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';

@@ -11,7 +11,7 @@ import java.util.List;
  * Created by ralph on 17-6-2016.
  */
 @Component
-public class UserDomain {
+public class PersonDomain {
 
 
     private EntityManager entityManager;
@@ -33,18 +33,18 @@ public class UserDomain {
         return true;
     }
 
-    public User findByUsername(String username) {
-        return entityManager.find(User.class, username);
+    public Person findByUsername(String username) {
+        return entityManager.find(Person.class, username);
     }
 
     public boolean authenticate(String username, String password) {
-        Query query = entityManager.createQuery("from User u where u.username = :username and u.password = :password");
+        Query query = entityManager.createQuery("from Person u where u.username = :username and u.password = :password");
         query.setParameter("username", username);
         query.setParameter("password", password);
         return !query.getResultList().isEmpty();
     }
 
-    public User replace(User user) {
-        return entityManager.merge(user);
+    public Person replace(Person person) {
+        return entityManager.merge(person);
     }
 }

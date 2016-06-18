@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import ralph.domain.User;
-import ralph.domain.UserDomain;
+import ralph.domain.Person;
+import ralph.domain.PersonDomain;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +19,11 @@ class MyController {
     public static final String HELLO = "Hello!";
 
 
-    private UserDomain userDomain;
+    private PersonDomain personDomain;
 
     @Autowired
-    public void setUserDomain(UserDomain userDomain) {
-        this.userDomain = userDomain;
+    public void setPersonDomain(PersonDomain personDomain) {
+        this.personDomain = personDomain;
     }
 
     /**
@@ -33,7 +33,7 @@ class MyController {
      */
     @RequestMapping(method = RequestMethod.GET, path = "/hello")
     public String sayHello() {
-        User user = userDomain.findByUsername("test");
+        Person person = personDomain.findByUsername("test");
         return HELLO;
     }
 
@@ -42,12 +42,12 @@ class MyController {
         List<String> validations = validate(username);
         if (!validations.isEmpty())
             return validations;
-        return userDomain.replace(new User());
+        return personDomain.replace(new Person());
     }
 
     public List<String> validate(String username) {
         List<String> validations = new ArrayList<>();
-        userDomain.validateUserExists(validations, username);
+        personDomain.validateUserExists(validations, username);
         return validations;
     }
 

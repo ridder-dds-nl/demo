@@ -8,22 +8,22 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Created by ralph on 17-6-2016.
  */
-public class UserTest {
+public class PersonTest {
 
     @Test
     public void emptyContructor_covered() {
-        assertNotNull(new User());
+        assertNotNull(new Person());
     }
 
     @Test
     public void toString_returnsAllValues() {
-       assertEquals("User{username='ralph', password='malph'}", new User("ralph", "malph").toString());
+        assertEquals("Person{username='ralph', password='malph'}", new Person("ralph", "malph").toString());
     }
 
     @Test
     public void getters_returnCorrectValues() {
-        User user = new User("diana", "ross");
-        assertEquals("diana", user.getUsername());
-        assertEquals("ross", user.getPassword());
+        Person person = new Person("diana", "ross");
+        assertEquals("diana", person.getUsername());
+        assertEquals("ross", person.getPassword());
     }
 }
