@@ -34,7 +34,7 @@ public class PersonDomainTest {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
-        personList.parallelStream().forEach(user -> entityManager.merge(user));
+        personList.parallelStream().forEach(entityManager::merge);
         transaction.commit();
     }
 

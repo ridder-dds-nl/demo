@@ -26,8 +26,8 @@ public class Person {
     /**
      * Construct with required fields.
      *
-     * @param username
-     * @param password
+     * @param username required
+     * @param password required
      */
     public Person(String username, String password) {
         this.username = username;

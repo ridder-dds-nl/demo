@@ -29,7 +29,7 @@ class MyController {
     /**
      * GET  http://localhost/hello
      *
-     * @return
+     * @return hello
      */
     @RequestMapping(method = RequestMethod.GET, path = "/hello")
     public String sayHello() {
