@@ -23,7 +23,7 @@ public class PersonController {
     @Autowired
     PersonDomain personDomain;
 
-    @RequestMapping(path = "/person", method = RequestMethod.GET)
+    @RequestMapping(path = "/person/details", method = RequestMethod.GET)
     String index(@RequestParam(value = "username", required = false) String username, ModelMap modelMap) {
         Person person = username == null ? null : personDomain.findByUsername(username);
         person = person == null ? new Person() : person;
@@ -32,11 +32,19 @@ public class PersonController {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    @RequestMapping(path = "/person", method = RequestMethod.POST)
+    @RequestMapping(path = "/person/write", method = RequestMethod.POST)
     String write(@ModelAttribute Person person, Model model) {
         person = personDomain.replace(person);
         model.addAttribute("person", person);
-        return "redirect:/person?username=" + person.getUsername();
+        return "redirect:/person/details?username=" + person.getUsername();
     }
+
+    @RequestMapping(path = "/person/delete", method = RequestMethod.GET)
+    String delete(@RequestParam(value = "username") String username) {
+        personDomain.delete(username);
+        return "redirect:/persons";
+    }
+
+
 
 }

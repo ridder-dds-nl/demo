@@ -54,4 +54,9 @@ public class PersonDomain {
         Query query = entityManager.createQuery("from Person p");
         return query.getResultList();
     }
+
+    @Transactional
+    public void delete(String username) {
+        entityManager.remove(findByUsername(username));
+    }
 }

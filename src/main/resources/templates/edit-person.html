@@ -14,8 +14,8 @@
 <body>
 <div class="container-fluid">
     <h1>Edit person</h1>
-    <a th:href="@{/persons}">Overview</a>
-    <form action="#" th:action="@{/person}" th:object="${person}" method="post">
+    Persons&nbsp;&gt;&gt;&nbsp;<a th:href="@{/persons}">Overview</a>
+    <form action="#" th:action="@{/person/write}" th:object="${person}" method="post">
         <div class="form-group">
             <label for="username">Email address:</label>
             <input th:field="*{username}" type="email" class="form-control" id="username"/>
@@ -29,6 +29,7 @@
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
+    <a th:href="@{/person/delete/(username=${person.username})}">Delete this person</a>
 </div>
 </body>
 
