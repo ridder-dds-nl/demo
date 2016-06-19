@@ -14,9 +14,18 @@
 
 <body>
 <div class="container-fluid">
-    <h1>Welcome</h1>
-    <a th:href="@{/account/details}">Create account</a>
-    <a th:href="@{/persons}">Manage persons</a>
+    Persons&nbsp;&gt;&gt;&nbsp;Overview
+    <h1>Persons</h1>
+    <ul>
+        <li th:each="person,iterationStatus : ${personList}">
+            <a th:href="@{/person/details/(username=${person.username})}">
+                <span th:text="${person.username}"></span>
+                <span th:text="${person.password}"></span>
+            </a>
+        </li>
+    </ul>
+
+    <a th:href="@{/person/details}">Create new</a>
 </div>
 </body>
 </html>

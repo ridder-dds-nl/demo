@@ -22,11 +22,7 @@ public class PersonsController {
 
     @RequestMapping(path = "/persons")
     String index(ModelMap modelMap) {
-//        List<Person> personList = new ArrayList<>();
-//        personList.addAll(Arrays.asList(new Person("amanda", "please"), new Person("ralph", "secret")));
-//        modelMap.put("personList", personList);
-//        modelMap.put("welcome", "Welcome");
         modelMap.put("personList", personDomain.all());
-        return "index";
+        return "person-overview";
     }
 }
