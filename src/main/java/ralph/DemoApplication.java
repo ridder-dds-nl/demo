@@ -1,5 +1,8 @@
 package ralph;
 
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.RuntimeConstants;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,7 +10,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.ui.velocity.VelocityEngineFactory;
 
+import java.io.IOException;
 import java.util.Properties;
 
 /**
@@ -17,36 +22,14 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class DemoApplication {
 
-    @Value("${application.smtp.server}")
-    private String smtpServer;
-
-    @Value("${application.smtp.port}")
-    private Integer smtpPort;
-
-    @Value("${application.smtp.user}")
-    private String smtpUser;
-
-    @Value("${application.smtp.password}")
-    private String smtpPassword;
-
     @Bean
-    public MailSender mailSender() {
-        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost(smtpServer);
-        mailSender.setPort(smtpPort);
-        mailSender.setUsername(smtpUser);
-        mailSender.setPassword(smtpPassword);
-        mailSender.setJavaMailProperties(createJavaMailProperties());
-        return mailSender;
+    public VelocityEngine velocityEngine() throws IOException {
+        VelocityEngine velocityEngine = new VelocityEngine();
+        velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
+        velocityEngine.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
+        velocityEngine.init();
+        return velocityEngine;
     }
-
-    private static Properties createJavaMailProperties() {
-        Properties properties = new Properties();
-        properties.put("mail.smtp.auth", true);
-        properties.put("mail.smtp.starttls.enable", true);
-        return properties;
-    }
-
 
     /**
      * Starts up te application.
@@ -57,6 +40,4 @@ public class DemoApplication {
         SpringApplication.run(DemoApplication.class, args);
     }
 
-
 }
-

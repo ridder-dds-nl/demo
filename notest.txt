@@ -1,0 +1,5 @@
+https://support.google.com/mail/troubleshooter/1668960?hl=nl&rd=1
+https://support.google.com/accounts/answer/6010255
+http://stackoverflow.com/questions/15378133/could-not-connect-to-smtp-host-smtp-gmail-com-port-465-response-1
+http://stackoverflow.com/questions/22260375/spring-send-email-from-gmail
+http://www.mkyong.com/spring/spring-propertysources-example/
