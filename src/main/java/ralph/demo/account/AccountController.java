@@ -1,6 +1,9 @@
 package ralph.demo.account;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,9 +28,15 @@ public class AccountController {
 
     private final PersonDomain personDomain;
 
+    private final MailSender mailSender;
+
     @Autowired
-    public AccountController(PersonDomain personDomain) {
+    public AccountController(PersonDomain personDomain, MailSender mailSender) {
         this.personDomain = personDomain;
+        this.mailSender = mailSender;
+        ((JavaMailSenderImpl) this.mailSender).setHost("smtp.gmail.com");
+        ((JavaMailSenderImpl) this.mailSender).setUsername("ralph.portbase");
+        ((JavaMailSenderImpl) this.mailSender).setPassword("280Aspen!");
     }
 
     @RequestMapping(path = "/account/details")
@@ -71,7 +80,11 @@ public class AccountController {
             redirectAttributes.addFlashAttribute("account", accountForm);
             return "redirect:/account/request-password";
         }
-        personDomain.replace(new Person(accountForm.getUsername(), accountForm.getPassword()));
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo("ridder@dds.nl");
+        message.setSubject("From webapp!");
+        message.setText("Here is your password: uooyomomma");
+        mailSender.send(message);
         return "redirect:/account/password-sent";
     }
 
