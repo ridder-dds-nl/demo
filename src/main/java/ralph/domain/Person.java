@@ -9,7 +9,7 @@ import javax.persistence.Table;
  * Created by ralph on 17-6-2016.
  */
 @Entity
-@Table(name = "user_t")
+@Table(name = "person")
 public class Person {
 
     @Id
@@ -20,7 +20,7 @@ public class Person {
     private String password;
 
     public Person() {
-        //for jps
+        //for jpa
     }
 
     /**
