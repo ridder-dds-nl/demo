@@ -43,6 +43,9 @@ public class PersonController {
                 }
                 person = personDomain.findByUsername(username);
             }
+            else {
+                person = personUI;
+            }
         }
         modelMap.addAttribute("newUser", newUser);
         modelMap.addAttribute("person", person);
@@ -59,9 +62,15 @@ public class PersonController {
 
     @RequestMapping(path = "/person/replace", method = RequestMethod.POST)
     public String replacePerson(@ModelAttribute Person person, RedirectAttributes redirectAttributes) {
-        return validateForReplacePerson(person, redirectAttributes) ?//
-                "redirect:/person/details?username=" + personDomain.save(person).getUsername()//
-                : "redirect:/person/details?username=" + person.getUsername();
+        List<String> validationList = validateForReplacePerson(person);
+        if (validationList.isEmpty()) {
+            return "redirect:/person/details?username=" + personDomain.save(person).getUsername();
+        }
+        else {
+            redirectAttributes.addFlashAttribute("validations", validationList);
+            redirectAttributes.addFlashAttribute("person", person);
+            return "redirect:/person/details?username=" + person.getUsername();
+        }
     }
 
     @RequestMapping(path = "/person/delete", method = RequestMethod.GET)
@@ -76,6 +85,8 @@ public class PersonController {
         personDomain.validateUsernameGiven(person, validationList);
         personDomain.validateFirstNameGiven(person, validationList);
         personDomain.validateLastNameGiven(person, validationList);
+        personDomain.validateEmailAddressGiven(person, validationList);
+        personDomain.validateOrganisationShortnameGiven(person, validationList);
         if (validationList.isEmpty()) {
             personDomain.validateUserDoesNotExist(person.getUsername(), validationList);
         }
@@ -83,16 +94,17 @@ public class PersonController {
         return true;
     }
 
-    private boolean validateForReplacePerson(Person person, RedirectAttributes redirectAttributes) {
+    private List<String> validateForReplacePerson(Person person) {
         List<String> validationList = new ArrayList<>();
         personDomain.validateUsernameGiven(person, validationList);
         personDomain.validateFirstNameGiven(person, validationList);
         personDomain.validateLastNameGiven(person, validationList);
+        personDomain.validateEmailAddressGiven(person, validationList);
+        personDomain.validateOrganisationShortnameGiven(person, validationList);
         if (validationList.isEmpty()) {
             personDomain.validateUserExists(person.getUsername(), validationList);
         }
-        if (updateFlashAttributes(person, redirectAttributes, validationList)) return false;
-        return true;
+        return validationList;
     }
 
     private boolean updateFlashAttributes(Person person, RedirectAttributes redirectAttributes, List<String> validationList) {

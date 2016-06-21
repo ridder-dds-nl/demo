@@ -20,7 +20,7 @@ public class PersonTest {
         Person person = new Person("ralph", "malph");
         person.setFirstName("Ralph");
         person.setLastName("Ridder");
-        assertEquals("Person{username='ralph', password='malph', firstName='Ralph', lastName='Ridder'}", person.toString());
+        assertEquals("Person{username='ralph', password='malph', firstName='Ralph', lastName='Ridder', emailAddress='null', organisationShortname='null', organisationName='null'}", person.toString());
     }
 
     @Test

@@ -25,6 +25,15 @@ public class Person {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "email_address")
+    private String emailAddress;
+
+    @Column(name = "organisation_shortname")
+    private String organisationShortname;
+
+    @Column(name = "organisation_name")
+    private String organisationName;
+
     public Person() {
         //for jpa
     }
@@ -72,6 +81,30 @@ public class Person {
         this.lastName = lastName;
     }
 
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    public String getOrganisationShortname() {
+        return organisationShortname;
+    }
+
+    public void setOrganisationShortname(String organisationShortname) {
+        this.organisationShortname = organisationShortname;
+    }
+
+    public String getOrganisationName() {
+        return organisationName;
+    }
+
+    public void setOrganisationName(String organisationName) {
+        this.organisationName = organisationName;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
@@ -79,6 +112,9 @@ public class Person {
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", organisationShortname='" + organisationShortname + '\'' +
+                ", organisationName='" + organisationName + '\'' +
                 '}';
     }
 }

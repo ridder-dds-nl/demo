@@ -38,6 +38,18 @@ public class PersonDomain {
         return validateGiven(person.getLastName(), "domain.person.lastname.required", validationList);
     }
 
+    public boolean validateEmailAddressGiven(Person person, List<String> validationList) {
+        return validateGiven(person.getEmailAddress(), "domain.person.emailaddress.required", validationList);
+    }
+
+    public boolean validateOrganisationShortnameGiven(Person person, List<String> validationList) {
+        return validateGiven(person.getOrganisationShortname(), "domain.person.organisationshortname.required", validationList);
+    }
+
+    public boolean validateNameGiven(Person person, List<String> validationList) {
+        return validateGiven(person.getOrganisationName(), "domain.person.organisationname.required", validationList);
+    }
+
     public boolean validateUserExists(String username, List<String> validations) {
         return validate(findByUsername(username) != null, "domains.personsnotfound", validations);
     }

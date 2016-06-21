@@ -23,7 +23,7 @@
     <form action="#" th:action="${newUser} ? @{/person/create} : @{/person/replace}" method="post"
           th:object="${person}">
         <div class="form-group">
-            <label for="username">Email address:</label>
+            <label for="username">Username:</label>
             <input th:if="${newUser}" th:field="*{username}" type="email" class="form-control" id="username"/>
             <input th:if="${!newUser}" th:field="*{username}" type="email" class="form-control" id="username"
                    readonly="readonly"/>
@@ -35,6 +35,18 @@
         <div class="form-group">
             <label for="lastName">Last name:</label>
             <input th:field="*{lastName}" type="text" class="form-control" id="lastName"/>
+        </div>
+        <div class="form-group">
+            <label for="emailAddress">Email address:</label>
+            <input th:field="*{emailAddress}" type="text" class="form-control" id="emailAddress"/>
+        </div>
+        <div class="form-group">
+            <label for="organisationShortname">Organisation shortname:</label>
+            <input th:field="*{organisationShortname}" type="text" class="form-control" id="organisationShortname"/>
+        </div>
+        <div class="form-group">
+            <label for="organisationName">Organisation name:</label>
+            <input th:field="*{organisationName}" type="text" class="form-control" id="organisationName"/>
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
