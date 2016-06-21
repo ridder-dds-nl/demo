@@ -42,7 +42,7 @@ public class PersonDomainTest {
     public void findByUserName_returnsCorrectInstance() {
         PersonDomain personDomain = new PersonDomain();
         personDomain.setEntityManager(entityManagerFactory.createEntityManager());
-        assertEquals("Person{username='ralph', password='password'}", personDomain.findByUsername("ralph").toString());
+        assertEquals("Person{username='ralph', password='password', firstName='null', lastName='null'}", personDomain.findByUsername("ralph").toString());
     }
 
     @Test

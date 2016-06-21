@@ -1,4 +1,4 @@
-package ralph.demo;
+package ralph.demo.util;
 
 import java.util.List;
 

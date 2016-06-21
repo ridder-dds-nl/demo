@@ -8,6 +8,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
 
+import static ralph.demo.util.ValidationSupport.validate;
+import static ralph.demo.util.ValidationSupport.validateGiven;
+
 /**
  * Created by ralph on 17-6-2016.
  */
@@ -22,16 +25,25 @@ public class PersonDomain {
         this.entityManager = entityManager;
     }
 
-    public boolean validateUserExists(List<String> validations, String username) {
-        return validate(validations, findByUsername(username) != null, "domains.users.notfound");
+
+    public boolean validateUsernameGiven(Person person, List<String> validationList) {
+        return validateGiven(person.getUsername(), "domain.person.username.required", validationList);
     }
 
-    public boolean validate(List<String> validations, boolean expression, String validationCode) {
-        if (!expression) {
-            validations.add(validationCode);
-            return false;
-        }
-        return true;
+    public boolean validateFirstNameGiven(Person person, List<String> validationList) {
+        return validateGiven(person.getFirstName(), "domain.person.firstname.required", validationList);
+    }
+
+    public boolean validateLastNameGiven(Person person, List<String> validationList) {
+        return validateGiven(person.getLastName(), "domain.person.lastname.required", validationList);
+    }
+
+    public boolean validateUserExists(String username, List<String> validations) {
+        return validate(findByUsername(username) != null, "domains.personsnotfound", validations);
+    }
+
+    public boolean validateUserDoesNotExist(String username, List<String> validationList) {
+        return validate(findByUsername(username) == null, "domains.user.alreadyexists", validationList);
     }
 
     public Person findByUsername(String username) {
@@ -46,7 +58,7 @@ public class PersonDomain {
     }
 
     @Transactional
-    public Person replace(Person person) {
+    public Person save(Person person) {
         return entityManager.merge(person);
     }
 

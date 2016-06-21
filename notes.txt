@@ -10,3 +10,4 @@ wachtwoord: 123456
 /opt/java/jdk1.8.0_91/bin/keytool -list -keystore keystore.p12
 
 https://thoughtfulsoftware.wordpress.com/2015/01/25/setting-up-https-for-spring-boot-2/
+http://docs.spring.io/spring-boot/docs/current/reference/html/deployment-install.html

@@ -17,7 +17,10 @@ public class PersonTest {
 
     @Test
     public void toString_returnsAllValues() {
-        assertEquals("Person{username='ralph', password='malph'}", new Person("ralph", "malph").toString());
+        Person person = new Person("ralph", "malph");
+        person.setFirstName("Ralph");
+        person.setLastName("Ridder");
+        assertEquals("Person{username='ralph', password='malph', firstName='Ralph', lastName='Ridder'}", person.toString());
     }
 
     @Test

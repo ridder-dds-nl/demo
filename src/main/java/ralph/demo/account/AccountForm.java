@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static ralph.demo.ValidationSupport.validate;
-import static ralph.demo.ValidationSupport.validateGiven;
+import static ralph.demo.util.ValidationSupport.validate;
+import static ralph.demo.util.ValidationSupport.validateGiven;
 
 /**
  * Created by ralph on 6/19/16.

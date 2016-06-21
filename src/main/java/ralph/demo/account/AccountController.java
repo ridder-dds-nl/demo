@@ -2,7 +2,6 @@ package ralph.demo.account;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,11 +11,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ralph.domain.Person;
 import ralph.domain.PersonDomain;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static java.util.Optional.of;
 
 /**
  * Created by ralph on 6/19/16.
@@ -39,6 +35,7 @@ public class AccountController {
         return "create-account";
     }
 
+
     @RequestMapping(path = "/account/write", method = RequestMethod.POST)
     public String submitCreateAccountForm(@ModelAttribute AccountForm accountForm, RedirectAttributes redirectAttributes) {
         Optional<List<String>> validationCodes = accountForm.validateInput();
@@ -47,10 +44,9 @@ public class AccountController {
             redirectAttributes.addFlashAttribute("account", accountForm);
             return "redirect:/account/details";
         }
-        personDomain.replace(new Person(accountForm.getUsername(), accountForm.getPassword()));
+        personDomain.save(new Person(accountForm.getUsername(), accountForm.getPassword()));
         return "redirect:/account/created";
     }
-
 
 
 }
