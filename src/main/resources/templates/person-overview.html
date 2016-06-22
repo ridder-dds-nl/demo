@@ -14,8 +14,19 @@
 
 <body>
 <div class="container-fluid">
-    Persons&nbsp;&gt;&gt;&nbsp;Overview
-    <h1>Persons</h1>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="#" class="navbar-brand">Portbase - Noodplanning</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="#" th:href="@{/account/request-password}">Forgot password</a></li>
+                <li><a href="#" th:href="@{/persons}">Send equipment notification</a></li>
+                <li><a href="#" th:href="@{/persons}">Manage persons</a></li>
+            </ul>
+        </div>
+    </nav>
+    <h1>Manage persons</h1>
     <ul>
         <li th:each="person,iterationStatus : ${personList}">
             <a th:href="@{/person/details/(username=${person.username})}">

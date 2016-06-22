@@ -20,6 +20,8 @@ import java.util.List;
 @Controller
 public class PersonController {
 
+    public static final String APPLICATION_VALIDATIONS = "applicationValidations";
+    private static final String FORM_SUCCESS = "formSuccess";
     PersonDomain personDomain;
 
     @Autowired
@@ -64,10 +66,11 @@ public class PersonController {
     public String replacePerson(@ModelAttribute Person person, RedirectAttributes redirectAttributes) {
         List<String> validationList = validateForReplacePerson(person);
         if (validationList.isEmpty()) {
+            redirectAttributes.addFlashAttribute(FORM_SUCCESS, validationList);
             return "redirect:/person/details?username=" + personDomain.save(person).getUsername();
         }
         else {
-            redirectAttributes.addFlashAttribute("validations", validationList);
+            redirectAttributes.addFlashAttribute(APPLICATION_VALIDATIONS, validationList);
             redirectAttributes.addFlashAttribute("person", person);
             return "redirect:/person/details?username=" + person.getUsername();
         }
@@ -109,10 +112,11 @@ public class PersonController {
 
     private boolean updateFlashAttributes(Person person, RedirectAttributes redirectAttributes, List<String> validationList) {
         if (!validationList.isEmpty()) {
-            redirectAttributes.addFlashAttribute("validations", validationList);
+            redirectAttributes.addFlashAttribute(APPLICATION_VALIDATIONS, validationList);
             redirectAttributes.addFlashAttribute("person", person);
             return true;
         }
+        redirectAttributes.addFlashAttribute(FORM_SUCCESS, validationList);
         return false;
     }
 

@@ -14,8 +14,19 @@
 
 <body>
 <div class="container-fluid">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="#" class="navbar-brand">Portbase - Noodplanning</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="#" th:href="@{/account/request-password}">Forgot password</a></li>
+                <li><a href="#" th:href="@{/persons}">Send equipment notification</a></li>
+                <li><a href="#" th:href="@{/persons}">Manage persons</a></li>
+            </ul>
+        </div>
+    </nav>
     <h1>Create account</h1>
-
     <ul>
         <li th:each="validationCode:${validationCodes}">
             <span th:text="${validationCode}"></span>
@@ -23,15 +34,15 @@
     </ul>
     <form action="#" th:action="@{/account/write}" th:object="${account}" method="post">
         <div class="form-group">
-            <label for="username">*Email address:</label>
+            <label for="username">Email address*:</label>
             <input th:field="*{username}" type="email" class="form-control" id="username"/>
         </div>
         <div class="form-group">
-            <label for="password">*Password:</label>
+            <label for="password">Password*:</label>
             <input th:field="*{password}" type="password" class="form-control" id="password"/>
         </div>
         <div class="form-group">
-            <label for="passwordCheck">*Retype password:</label>
+            <label for="passwordCheck">Retype password*:</label>
             <input th:field="*{passwordCheck}" type="password" class="form-control" id="passwordCheck"/>
         </div>
         <button type="submit" class="btn btn-default">Next</button>

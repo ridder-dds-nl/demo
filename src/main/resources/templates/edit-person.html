@@ -13,13 +13,26 @@
 </head>
 <body>
 <div class="container-fluid">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="#" th:href="@{/}" class="navbar-brand">Portbase - Noodplanning</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="#" th:href="@{/account/request-password}">Forgot password</a></li>
+                <li><a href="#" th:href="@{/persons}">Send equipment notification</a></li>
+                <li><a href="#" th:href="@{/persons}">Manage persons</a></li>
+            </ul>
+        </div>
+    </nav>
     <h1>Edit person</h1>
+    <p th:if="${applicationValidations}" class="bg-danger">Attention.</p>
+    <p th:if="${formSuccess}" class="bg-success">Saved.</p>
     <ul>
-        <li th:each="validation:${validations}">
-            <span th:text="${validation}"></span>
+        <li th:each="applicationValidation:${applicationValidations}">
+            <span th:text="#{${applicationValidation}}"></span>
         </li>
     </ul>
-    <a th:href="@{/persons}">Persons overview</a>
     <form action="#" th:action="${newUser} ? @{/person/create} : @{/person/replace}" method="post"
           th:object="${person}">
         <div class="form-group">
@@ -37,7 +50,7 @@
             <input th:field="*{lastName}" type="text" class="form-control" id="lastName"/>
         </div>
         <div class="form-group">
-            <label for="emailAddress">Email address:</label>
+            <label for="emailAddress">e-mail address:</label>
             <input th:field="*{emailAddress}" type="text" class="form-control" id="emailAddress"/>
         </div>
         <div class="form-group">
