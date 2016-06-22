@@ -12,6 +12,10 @@ public class ValidationSupport {
         return validate(value != null && !value.trim().isEmpty(), validationMessage, validationMessages);
     }
 
+    public static final boolean validateNotNull(Object value, String message, List<String> validationList) {
+        return validate(value != null, message, validationList);
+    }
+
     public static final boolean validate(boolean expression, String validationMessage, List<String> validationMessages) {
         if (!expression) {
             validationMessages.add(validationMessage);

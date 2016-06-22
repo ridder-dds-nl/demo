@@ -10,6 +10,7 @@ import java.util.List;
 
 import static ralph.demo.util.ValidationSupport.validate;
 import static ralph.demo.util.ValidationSupport.validateGiven;
+import static ralph.demo.util.ValidationSupport.validateNotNull;
 
 /**
  * Created by ralph on 17-6-2016.
@@ -18,6 +19,7 @@ import static ralph.demo.util.ValidationSupport.validateGiven;
 public class PersonDomain {
 
 
+    public static final String DOMAIN_PERSON_NOTFOUND = "domain.personnotfound";
     private EntityManager entityManager;
 
     @PersistenceContext
@@ -51,7 +53,7 @@ public class PersonDomain {
     }
 
     public boolean validateUserExists(String username, List<String> validations) {
-        return validate(findByUsername(username) != null, "domains.personsnotfound", validations);
+        return validate(findByUsername(username) != null, DOMAIN_PERSON_NOTFOUND, validations);
     }
 
     public boolean validateUserDoesNotExist(String username, List<String> validationList) {
@@ -82,5 +84,19 @@ public class PersonDomain {
     @Transactional
     public void delete(String username) {
         entityManager.remove(findByUsername(username));
+    }
+
+    public Person findByEmailAddress(String emailAddress) {
+        Query query = entityManager.createQuery("from Person p where p.emailAddress= :emailAddress");
+        query.setParameter("emailAddress", emailAddress);
+        List<Person> resultList = query.getResultList();
+        if (resultList.isEmpty()) {
+            return null;
+        }
+        return resultList.get(0);
+    }
+
+    public boolean validatePersonExists(Person person, List<String> validationList) {
+        return validateNotNull(person, DOMAIN_PERSON_NOTFOUND, validationList);
     }
 }

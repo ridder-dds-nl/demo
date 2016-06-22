@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import ralph.domain.Person;
 import ralph.domain.PersonDomain;
 
 import java.util.ArrayList;
@@ -50,9 +51,9 @@ public class ForgotPasswordController {
 
     @RequestMapping(path = "/account/request-password", method = RequestMethod.POST)
     public String submitRequestPassword(@ModelAttribute AccountForm accountForm, RedirectAttributes redirectAttributes) {
-        Optional<List<String>> validationCodes = validate(accountForm);
-        if (validationCodes.isPresent()) {
-            redirectAttributes.addFlashAttribute("validationCodes", validationCodes.get());
+        List<String> validationList = validate(accountForm);
+        if (!validationList.isEmpty()) {
+            redirectAttributes.addFlashAttribute("applicationValidations", validationList);
             redirectAttributes.addFlashAttribute("account", accountForm);
             return "redirect:/account/request-password";
         }
@@ -68,10 +69,14 @@ public class ForgotPasswordController {
         mailSender.send(message);
     }
 
-    Optional<List<String>> validate(AccountForm accountForm) {
-        List<String> validationCodes = new ArrayList<>();
-        accountForm.validateUsernameGiven(validationCodes);
-        return validationCodes.isEmpty() ? Optional.empty() : of(validationCodes);
+    List<String> validate(AccountForm accountForm) {
+        List<String> validationList = new ArrayList<>();
+        accountForm.validateUsernameGiven(validationList);
+        if (validationList.isEmpty()) {
+            Person person = personDomain.findByEmailAddress(accountForm.getUsername());
+            personDomain.validatePersonExists(person, validationList);
+        }
+        return validationList;
     }
 
 }
