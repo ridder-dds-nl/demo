@@ -21,8 +21,6 @@ public class ApplicationStartedEventListener implements ApplicationListener<Cont
 
     Logger LOGGER = LoggerFactory.getLogger(ApplicationStartedEventListener.class);
 
-//    private EntityManager entityManager;
-
     private PersonDomain personDomain;
 
     @Autowired
@@ -30,27 +28,26 @@ public class ApplicationStartedEventListener implements ApplicationListener<Cont
         this.personDomain = personDomain;
     }
 
-    //    @PersistenceContext
-//    public void setEntityManager(EntityManager entityManager) {
-//        this.entityManager = entityManager;
-//    }
-
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent applicationStartedEvent) {
-        Person admin = personDomain.findByUsername("admin");
-        if (admin == null) {
-            admin = new Person("bigboss", "*VenomSnake?");
-            admin.setFirstName("Administrator");
-            admin.setLastName("Administrator");
-            admin.setEmailAddress("ralph.portbase@gmail.com");
-            admin.setOrganisationShortname("PORTBASE");
-            admin.setOrganisationName("Portbase B.V.");
-            personDomain.save(admin);
+        if (personDomain.findByUsername("admin") == null) {
             LOGGER.info("Creating admin user.");
+            createAdminUser();
         }
         else {
             LOGGER.info("Admin user present.");
         }
+    }
+
+    private void createAdminUser() {
+        Person admin;
+        admin = new Person("bigboss", "*VenomSnake?");
+        admin.setFirstName("Administrator");
+        admin.setLastName("Administrator");
+        admin.setEmailAddress("ralph.portbase@gmail.com");
+        admin.setOrganisationShortname("PORTBASE");
+        admin.setOrganisationName("Portbase B.V.");
+        personDomain.save(admin);
     }
 }
