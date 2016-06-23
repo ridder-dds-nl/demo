@@ -54,6 +54,29 @@ public class PersonController {
         return "edit-person";
     }
 
+    public String newPerson(ModelMap modelMap) {
+        Person person = (Person) modelMap.get("person");
+        person = person== null ? new Person() : person;
+        modelMap.addAttribute("newUser", true);
+        modelMap.addAttribute("person", person);
+        return "edit-person";
+    }
+
+    public String existingPerson(@RequestParam(value = "username", required = false)  String username, ModelMap modelMap) {
+        Person person = (Person) modelMap.get("person");
+        if (person == null) {
+            List<String> validationList = new ArrayList<>();
+            personDomain.validateUserExists(username, validationList);
+            if (!validationList.isEmpty()) {
+                throw new RuntimeException("Not found.");
+            }
+            person = personDomain.findByUsername(username);
+        }
+        modelMap.addAttribute("newUser", false);
+        modelMap.addAttribute("person", person);
+        return "edit-person";
+    }
+
     @RequestMapping(path = "/person/create", method = RequestMethod.POST)
     public String createPerson(@ModelAttribute Person person, RedirectAttributes redirectAttributes) {
         return validateForCreatePerson(person, redirectAttributes) ?//
