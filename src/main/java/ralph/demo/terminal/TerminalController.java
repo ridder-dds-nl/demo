@@ -59,12 +59,13 @@ public class TerminalController {
 
     @RequestMapping(path = "/terminal/new", method = RequestMethod.POST)
     public String create(@ModelAttribute Terminal terminal, RedirectAttributes redirectAttributes) {
-        List<String> validationList = validateForCreate(terminal, redirectAttributes);
-        if (validationList.isEmpty()) {
+        TerminalValidator validator = new TerminalValidator();
+        validator.validate(terminalDomain, terminal);
+        if (validator.isValid()) {
             redirectAttributes.addFlashAttribute(FORM_SUCCESS, true);
             return "redirect:/terminal?name=" + terminalDomain.save(terminal).getName();
         }
-        redirectAttributes.addFlashAttribute(APPLICATION_VALIDATIONS, validationList);
+        redirectAttributes.addFlashAttribute(APPLICATION_VALIDATIONS, validator.getValidationList());
         redirectAttributes.addFlashAttribute(TERMINAL, terminal);
         return "redirect:/terminal/new";
     }
@@ -72,12 +73,13 @@ public class TerminalController {
 
     @RequestMapping(path = "/terminal", method = RequestMethod.POST)
     public String replace(@ModelAttribute Terminal terminal, RedirectAttributes redirectAttributes) {
-        List<String> validationList = validateForReplace(terminal);
-        if (validationList.isEmpty()) {
+        TerminalValidator validator = new TerminalValidator();
+        validator.validateForReplace(terminalDomain, terminal);
+        if (validator.isValid()) {
             redirectAttributes.addFlashAttribute(FORM_SUCCESS, true);
             return "redirect:/terminal?name=" + terminalDomain.save(terminal).getName();
         }
-        redirectAttributes.addFlashAttribute(APPLICATION_VALIDATIONS, validationList);
+        redirectAttributes.addFlashAttribute(APPLICATION_VALIDATIONS, validator.getValidationList());
         redirectAttributes.addFlashAttribute(TERMINAL, terminal);
         return "redirect:/terminal?username=" + terminal.getName();
     }
@@ -88,22 +90,5 @@ public class TerminalController {
         return "redirect:/terminals";
     }
 
-
-    private List<String> validateForCreate(Terminal terminal, RedirectAttributes redirectAttributes) {
-        List<String> validationList = new ArrayList<>();
-        terminalDomain.validateNameGiven(terminal.getName(), validationList);
-        if (validationList.isEmpty()) {
-            terminalDomain.validateDoesNotExist(terminal.getName(), validationList);
-        }
-        return validationList;
-    }
-
-    private List<String> validateForReplace(Terminal terminal) {
-        List<String> validationList = new ArrayList<>();
-        if (validationList.isEmpty()) {
-            terminalDomain.validateExists(terminal.getName(), validationList);
-        }
-        return validationList;
-    }
 
 }
