@@ -116,8 +116,7 @@ public class PersonController {
         if (validationList.isEmpty()) {
             personDomain.validateUserDoesNotExist(person.getUsername(), validationList);
         }
-        if (updateFlashAttributes(person, redirectAttributes, validationList)) return false;
-        return true;
+        return updateFlashAttributes(person, redirectAttributes, validationList) ? false : true;
     }
 
     private List<String> validateForReplacePerson(Person person) {

@@ -1,0 +1,15 @@
+username: ralph
+password: 952d2c56d0485958336747bcdd9859d
+firstName: Ralph
+lastName: Ridder
+emailAddress: ridder@dds.nl
+Role:
+  - name: ADMIN
+---
+username: maurice
+password: f9ed29f47f5743fffda2e347876956
+firstName: Maurice
+lastName: Serier
+emailAddress: info@serier-it.nl
+Role:
+  - name: CUSTOMER

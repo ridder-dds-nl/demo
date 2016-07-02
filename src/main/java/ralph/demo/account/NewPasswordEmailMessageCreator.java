@@ -16,8 +16,6 @@ public class NewPasswordEmailMessageCreator {
 
     private final VelocityEngine velocityEngine;
 
-    private final String subject = "Here is your new password.";
-
     @Autowired
     public NewPasswordEmailMessageCreator(VelocityEngine velocityEngine) {
         this.velocityEngine = velocityEngine;
@@ -32,6 +30,6 @@ public class NewPasswordEmailMessageCreator {
     }
 
     public String getSubject() {
-        return subject;
+        return "Here is your new password.";
     }
 }

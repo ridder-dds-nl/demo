@@ -8,19 +8,19 @@ import java.util.List;
 public class ValidationSupport {
 
 
-    public static final boolean validateGiven(String value, String validationMessage, List<String> validationMessages) {
+    public static boolean validateGiven(String value, String validationMessage, List<String> validationMessages) {
         return validate(value != null && !value.trim().isEmpty(), validationMessage, validationMessages);
     }
 
-    public static final boolean validateNotNull(Object value, String message, List<String> validationList) {
+    public static boolean validateNotNull(Object value, String message, List<String> validationList) {
         return validate(value != null, message, validationList);
     }
 
-    public static final boolean validateNull(Object value, String message, List<String> validationList) {
+    public static boolean validateNull(Object value, String message, List<String> validationList) {
         return validate(value == null, message, validationList);
     }
 
-    public static final boolean validate(boolean expression, String validationMessage, List<String> validationMessages) {
+    public static boolean validate(boolean expression, String validationMessage, List<String> validationMessages) {
         if (!expression) {
             validationMessages.add(validationMessage);
         }
